@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: ${CUSTOMER_DB_NAME}
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:postgresql://${CUSTOMER_DB_HOST}:${CUSTOMER_DB_PORT}/${CUSTOMER_DB_NAME}
+    username: ${CUSTOMER_DB_USER}
+    password: ${CUSTOMER_DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+server:
+  port: 8080
