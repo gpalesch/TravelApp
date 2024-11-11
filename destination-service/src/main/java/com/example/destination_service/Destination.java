@@ -18,11 +18,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "destination") // richtigen Namen kucken
+@Table(name = "destinations")
 public class Destination {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(name = "name", nullable = false)
@@ -34,6 +34,6 @@ public class Destination {
     @Column(name = "localisation", nullable = false)
     private String localisation;
 
-    @Column(name = "picUrl")
+    @Column(name = "pic_url")
     private String picUrl;
 }

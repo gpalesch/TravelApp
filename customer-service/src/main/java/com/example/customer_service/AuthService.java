@@ -6,10 +6,11 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     private final CustomerRepository customerRepository;
-    private final CustomerMapper mapper = CustomerMapper.INSTANCE;
+    private final CustomerMapper mapper;
 
-    public AuthService(CustomerRepository customerRepository) {
+    public AuthService(CustomerRepository customerRepository, CustomerMapper mapper) {
         this.customerRepository = customerRepository;
+        this.mapper = mapper;
     }
 
     public CustomerDTO register(CustomerRegistrationDTO customerRegistrationDTO) {

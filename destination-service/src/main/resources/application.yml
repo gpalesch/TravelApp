@@ -2,7 +2,7 @@ spring:
   application:
     name: destinationdb
   datasource:
-    url: jdbc:postgresql://db:5432/destinationdb
+    url: jdbc:postgresql://destinationdb:5432/destinationdb
     username: destinationUser
     password: destinationPassword
     driver-class-name: org.postgresql.Driver

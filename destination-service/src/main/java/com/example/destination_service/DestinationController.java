@@ -13,13 +13,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.destination_service.dto.DestinationDTO;
+import com.example.destination_service.dto.DestinationRequestDTO;
+
 @RestController
-@RequestMapping (value = "/destinations")
+@RequestMapping(value = "/api/destinations")
 public class DestinationController {
 
     private DestinationService destinationService;
     
-    @GetMapping("")
+    public DestinationController(DestinationService destinationService) {
+        this.destinationService = destinationService;
+    }
+
+    @GetMapping("/all")
     public ResponseEntity<List<DestinationDTO>> getDestinations() {
         return ResponseEntity.ok(destinationService.getDestinations());
     }
@@ -29,7 +36,7 @@ public class DestinationController {
         return ResponseEntity.ok(destinationService.getDestination(id));
     }
 
-    @PostMapping("")
+    @PostMapping("/add")
     public ResponseEntity<DestinationDTO> createDestination(@RequestBody DestinationRequestDTO destinationRequest) {
         return ResponseEntity.ok(destinationService.createDestination(destinationRequest));
     }
