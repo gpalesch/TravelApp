@@ -1,20 +1,13 @@
 spring:
   application:
-    name: ${DESTINATION_DB_NAME}
-  config:
-    import: optional:file:.env[.properties]
+    name: destinationdb
   datasource:
-    url: jdbc:postgresql://${DESTINATION_DB_HOST}:${DESTINATION_DB_PORT}/${DESTINATION_DB_NAME}
-    username: ${DESTINATION_DB_USER}
-    password: ${DESTINATION_DB_PASSWORD}
+    url: jdbc:postgresql://db:5432/destinationdb
+    username: destinationUser
+    password: destinationPassword
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-  data:
-    redis:
-      host: localhost
-      port: 6379
-server:
-  port: 8080
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

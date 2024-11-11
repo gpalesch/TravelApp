@@ -1,20 +1,5 @@
 spring:
   application:
-    name: ${BOOKING_DB_NAME}
-  config:
-    import: optional:file:.env[.properties]
-  datasource:
-    url: jdbc:postgresql://${BOOKING_DB_HOST}:${BOOKING_DB_PORT}/${BOOKING_DB_NAME}
-    username: ${BOOKING_DB_USER}
-    password: ${BOOKING_DB_PASSWORD}
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-  data:
-    redis:
-      host: localhost
-      port: 6379
+    name: booking-service
 server:
   port: 8080
