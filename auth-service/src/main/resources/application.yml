@@ -1,10 +1,10 @@
 spring:
   application:
-    name: bookingdb
+    name: authdb
   datasource:
-    url: jdbc:postgresql://bookingdb:5432/bookingdb
-    username: bookingUser
-    password: bookingPassword
+    url: jdbc:postgresql://authdb:5432/authdb
+    username: authUser
+    password: authPassword
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
