@@ -71,9 +71,85 @@ services:
       start_period: 30s
       timeout: 5s
 
+  booking-service:
+    image: "docker-spring-boot-booking-service:latest"
+    build:
+      context: ./booking-service
+      dockerfile: Dockerfile 
+    container_name: booking-service
+    environment:
+      - POSTGRES_USER=bookingUser
+      - POSTGRES_PASSWORD=boookingPassword
+    ports:
+      - "8082:8080"
+    depends_on:
+      - bookingdb
+    networks:
+      - mynetwork
+
+  bookingdb:
+    image: postgres:latest
+    container_name: booking-db
+    environment:
+      - POSTGRES_DB=bookingdb
+      - POSTGRES_USER=bookingUser
+      - POSTGRES_PASSWORD=bookingPassword
+    ports:
+      - "5434:5432"
+    volumes:
+      - booking-db-data:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bookingUser -d bookingdb"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+
+  auth-service:
+    image: "docker-spring-boot-auth-service:latest"
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile 
+    container_name: auth-service
+    environment:
+      - POSTGRES_USER=authUser
+      - POSTGRES_PASSWORD=authPassword
+    ports:
+      - "8083:8080"
+    depends_on:
+      - authdb
+    networks:
+      - mynetwork
+
+  authdb:
+    image: postgres:latest
+    container_name: auth-db
+    environment:
+      - POSTGRES_DB=authdb
+      - POSTGRES_USER=authUser
+      - POSTGRES_PASSWORD=authPassword
+    ports:
+      - "5435:5432"
+    volumes:
+      - auth-db-data:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U authUser -d authdb"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+
+
+
 volumes:
   destination-db-data:
   customer-db-data:
+  booking-db-data:
+  auth-db-data:
 
 networks:
   mynetwork:
