@@ -1,4 +1,4 @@
-package com.example.customer_service;
+package com.example.customer_service.dto;
 
 import java.util.UUID;
 
@@ -11,10 +11,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDTO {
+public class CustomerResponseDTO {
 
     private UUID id;
     private String name;
     private String email;
-    
+    private String phone;
+    private String address;
 }
