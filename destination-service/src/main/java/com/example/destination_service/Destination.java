@@ -1,5 +1,6 @@
 package com.example.destination_service;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,6 +34,12 @@ public class Destination {
 
     @Column(name = "localisation", nullable = false)
     private String localisation;
+
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
+
+    @Column(name = "available", nullable = false)
+    private boolean available;
 
     @Column(name = "pic_url")
     private String picUrl;

@@ -46,6 +46,8 @@ public class DestinationService {
         destination.setName(destinationRequest.getName());
         destination.setDescription(destinationRequest.getDescription());
         destination.setLocalisation(destinationRequest.getLocalisation());
+        destination.setPrice(destinationRequest.getPrice());
+        destination.setAvailable(destinationRequest.isAvailable());
         destination.setPicUrl(destinationRequest.getPicUrl());
 
         Destination savedDestination = destinationRepository.save(destination);
