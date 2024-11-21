@@ -1,10 +1,9 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const User = require('./userModel');
 
 const router = express.Router();
-
-const usersDB = [];
 
 function authenticateToken(req, res, next) {
     const token = req.headers['authorization'];
@@ -20,31 +19,39 @@ function authenticateToken(req, res, next) {
 router.post('/register', async (req, res) => {
     const { username, password } = req.body;
 
-    const userExists = usersDB.find(user => user.username === username);
-    if (userExists) return res.status(400).send('User already exists');
+    try {
+        const userExists = await User.findOne({ username });
+        if (userExists) return res.status(400).send('User already exists');
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = { username, password: hashedPassword };
-    usersDB.push(user);
+        const user = new User({ username, password: hashedPassword });
+        await user.save();
 
-    res.status(201).send('User registered successfully');
+        res.status(201).send('User registered successfully');
+    } catch (err) {
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
-    const user = usersDB.find(user => user.username === username);
-    if (!user) return res.status(400).send('User not found');
+    try {
+        const user = await User.findOne({ username });
+        if (!user) return res.status(400).send('User not found');
 
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) return res.status(400).send('Invalid credentials');
+        const validPassword = await bcrypt.compare(password, user.password);
+        if (!validPassword) return res.status(400).send('Invalid credentials');
 
-    const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN
-    });
+        const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIRES_IN
+        });
 
-    res.status(200).json({ token });
+        res.status(200).json({ token });
+    } catch (err) {
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 router.get('/protected', authenticateToken, (req, res) => {
